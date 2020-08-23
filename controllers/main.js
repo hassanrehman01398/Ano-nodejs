@@ -22,7 +22,7 @@ const postTableData = async (req, res, db) => {
 
       console.log('Error:', err.message);
       res.status(500).json({
-        message: "Internal Error",
+        message: "Error(Internal)",
         success: false,
         error: err.message
      })
