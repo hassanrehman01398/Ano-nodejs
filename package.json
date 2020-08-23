@@ -4,7 +4,8 @@
   "description": "crud practice",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "build": "./node_modules/.bin/webpack --config webpack.conf.js"
   },
   "author": "",
   "license": "ISC",
@@ -21,6 +22,8 @@
     "pg": "^8.0.3"
   },
   "devDependencies": {
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
   }
 }
