@@ -11,9 +11,9 @@ const getTableData = (req, res, db) => {
 }
 
 const postTableData = async (req, res, db) => {
-  const { post_description,likes,views } = req.body
+  const { post_description,likes,views ,posttitle,posttime} = req.body
   const added = new Date()
-  await db('posts').insert({ post_description,likes,views})
+  await db('posts').insert({ post_description,likes,views,posttitle,posttime})
     .returning('*')
     .then(item => {
       res.json(item)
@@ -31,8 +31,8 @@ const postTableData = async (req, res, db) => {
 
 
 const putTableData = (req, res, db) => {
-  const { post_id, post_description,likes,views} = req.body
-  db('posts').where({post_id}).update({post_description,likes,viewsy})
+  const { post_id, post_description,likes,views ,posttitle,posttime} = req.body
+  db('posts').where({post_id}).update({post_description,likes,views ,posttitle,posttime})
     .returning('*')
     .then(item => {
       res.json(item)

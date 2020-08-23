@@ -27,7 +27,9 @@ var db = require('knex')({
     user : 'hassanrehman01398@anonymous',
     password : 'hassan01398=',
     database : 'ano_posting',
-    port:'5432'
+    port: 5432,
+    ssl: true
+    
   }
 });
 
