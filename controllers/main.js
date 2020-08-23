@@ -37,7 +37,7 @@ const putTableData = (req, res, db) => {
     .then(item => {
       res.json(item)
     })
-    .catch(err => res.status(400).json({dbError: 'db error'}))
+    .catch(err => res.status(400).json({dbError: 'Database Connection Error'}))
 }
 
 const deleteTableData = (req, res, db) => {
