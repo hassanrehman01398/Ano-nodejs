@@ -23,10 +23,11 @@ const morgan = require('morgan') // logs requests
 var db = require('knex')({
   client: 'pg',
   connection: {
-    host : 'localhost',
-    user : 'postgres',
-    password : 'hassan',
-    database : 'ano_posting'
+    host : 'anonymous.postgres.database.azure.com',
+    user : 'hassanrehman01398@anonymous',
+    password : 'hassan01398=',
+    database : 'ano_posting',
+    port:'5432'
   }
 });
 
