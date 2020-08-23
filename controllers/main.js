@@ -121,7 +121,7 @@ const getminview = (req, res, db) => {
   //   .catch(err => res.status(400).json({dbError: 'Database Connection Error'}))
 }
 const getspecificpostData = (req, res, db) => {
-  const { post_id} = req.param
+  const { post_id} = req.body
   db.select('*').from('posts').where({post_id})
     .then(items => {
       if(items.length){
@@ -133,7 +133,7 @@ const getspecificpostData = (req, res, db) => {
     .catch(err => res.status(400).json({dbError: 'Database Connection Error'}))
 }
 const getspecificreplyData = (req, res, db) => {
-  const { post_id} = req.param
+  const { post_id} = req.body
   db.select('*').from('replys').where({post_id})
     .then(items => {
       if(items.length){
