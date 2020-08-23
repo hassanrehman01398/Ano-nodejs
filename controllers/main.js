@@ -46,7 +46,7 @@ const deleteTableData = (req, res, db) => {
     .then(() => {
       res.json({delete: 'true'})
     })
-    .catch(err => res.status(400).json({dbError: 'db error'}))
+    .catch(err => res.status(400).json({dbError: 'Database Connection Error'}))
 }
 
 module.exports = {
