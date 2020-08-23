@@ -7,7 +7,7 @@ const getTableData = (req, res, db) => {
         res.json({dataExists: 'false'})
       }
     })
-    .catch(err => res.status(400).json({dbError: 'db error'}))
+    .catch(err => res.status(400).json({dbError: 'Database Connection Error'}))
 }
 
 const postTableData = async (req, res, db) => {
