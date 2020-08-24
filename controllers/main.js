@@ -155,10 +155,8 @@ const getspecificreplyData = (req, res, db) => {
     port: 5432,
     ssl: true
   });
-  console.log(reply_to)
   console.log("Successful connection to the database");
-  pool.query("select * from replys where reply_to='"+reply_to+"'", (err, rows) => {
-    console.log(rows)
+  pool.query("select * from replys where reply_id='"+reply_to+"'", (err, rows) => {
   //  res.json(rows["rows"])
     if(rows["rows"].length>0){
       res.json(rows["rows"])
