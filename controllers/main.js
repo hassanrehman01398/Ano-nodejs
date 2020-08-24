@@ -121,28 +121,54 @@ const getminview = (req, res, db) => {
   //   .catch(err => res.status(400).json({dbError: 'Database Connection Error'}))
 }
 const getspecificpostData = (req, res, db) => {
-  const { post_id} = req.body
-  db.select('*').from('posts').where({post_id})
-    .then(items => {
-      if(items.length){
-        res.json(items)
-      } else {
-        res.json({dataExists: 'false'})
-      }
-    })
-    .catch(err => res.status(400).json({dbError: 'Database Connection Error'}))
+  let post_id = req.query.post_id;
+  const { Pool } = require("pg");
+  const pool = new Pool({
+    host : 'anonymous.postgres.database.azure.com',
+    user : 'hassanrehman01398@anonymous',
+    password : 'hassan01398=',
+    database : 'ano_posting',
+    port: 5432,
+    ssl: true
+  });
+  console.log("Successful connection to the database");
+  pool.query("select * from posts where post_id='"+post_id+"'", (err, rows) => {
+  //  res.json(rows["rows"])
+    if(rows["rows"].length>0){
+      res.json(rows["rows"])
+
+    }
+    else{
+      res.json({dataExists: 'false'})
+    }
+})
+
 }
 const getspecificreplyData = (req, res, db) => {
-  const { post_id} = req.body
-  db.select('*').from('replys').where({post_id})
-    .then(items => {
-      if(items.length){
-        res.json(items)
-      } else {
-        res.json({dataExists: 'false'})
-      }
-    })
-    .catch(err => res.status(400).json({dbError: 'Database Connection Error'}))
+  let reply_to = req.query.reply_to;
+  const { Pool } = require("pg");
+  const pool = new Pool({
+    host : 'anonymous.postgres.database.azure.com',
+    user : 'hassanrehman01398@anonymous',
+    password : 'hassan01398=',
+    database : 'ano_posting',
+    port: 5432,
+    ssl: true
+  });
+  console.log(reply_to)
+  console.log("Successful connection to the database");
+  pool.query("select * from replys where reply_to='"+reply_to+"'", (err, rows) => {
+    console.log(rows)
+  //  res.json(rows["rows"])
+    if(rows["rows"].length>0){
+      res.json(rows["rows"])
+
+    }
+    else{
+      res.json({dataExists: 'false'})
+    }
+})
+
 }
 const getcountpostData = (req, res, db) => {
   // var sql = "SELECT * FROM posts";
@@ -227,6 +253,7 @@ module.exports = {
   getcountpostData,
   getspecificreplyData,
   postreplyData,
+  
   getmaxview,
   getminview,
   getnewest
