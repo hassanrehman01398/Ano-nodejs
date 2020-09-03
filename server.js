@@ -23,12 +23,12 @@ const morgan = require('morgan') // logs requests
 var db = require('knex')({
   client: 'pg',
   connection: {
-    host : 'localhost',
-    user : 'postgres',
-    password : 'hassan',
-    database : 'ano_posting',
-    port: 5432
-   // ssl: true
+    host : 'ec2-52-23-86-208.compute-1.amazonaws.com',
+    user : 'qzlxmsfcehahpz',
+    password : '2f538ded7e8115802d0570dcb4a0bdee06d3e6cfbf82f3d37e8ef3703f186471',
+    database : 'ddu36ura7kra61',
+    port: 5432,
+   ssl: true,
     
   }
 });

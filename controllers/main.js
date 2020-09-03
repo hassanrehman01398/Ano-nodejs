@@ -7,7 +7,7 @@ const getTableData = (req, res, db) => {
         res.json({dataExists: 'false'})
       }
     })
-    .catch(err => res.status(400).json({dbError: 'Database Connection Error'}))
+    .catch(err =>console.log(err), res.status(400).json({dbError: 'Database Connection Error'}))
 }
 const getmaxview = async function(req, res, db)  {
   // var con = mysql.createConnection({
@@ -53,10 +53,10 @@ const getmaxview = async function(req, res, db)  {
 const getnewest= (req, res, db) => {
   const { Pool } = require("pg");
   const pool = new Pool({
-    host : 'localhost',
-    user : 'postgres',
-    password : 'hassan',
-    database : 'ano_posting',
+    host : 'ec2-52-23-86-208.compute-1.amazonaws.com',
+    user : 'qzlxmsfcehahpz',
+    password : '2f538ded7e8115802d0570dcb4a0bdee06d3e6cfbf82f3d37e8ef3703f186471',
+    database : 'ddu36ura7kra61',
     port: 5432
   });
   console.log("Successful connection to the database");
@@ -89,10 +89,10 @@ catch(e){}
 const getminview = (req, res, db) => {
   const { Pool } = require("pg");
   const pool = new Pool({
-    host : 'localhost',
-    user : 'postgres',
-    password : 'hassan',
-    database : 'ano_posting',
+    host : 'ec2-52-23-86-208.compute-1.amazonaws.com',
+    user : 'qzlxmsfcehahpz',
+    password : '2f538ded7e8115802d0570dcb4a0bdee06d3e6cfbf82f3d37e8ef3703f186471',
+    database : 'ddu36ura7kra61',
     port: 5432
   });
   console.log("Successful connection to the database");
@@ -123,10 +123,10 @@ const getspecificpostData = (req, res, db) => {
   let post_id = req.query.post_id;
   const { Pool } = require("pg");
   const pool = new Pool({
-    host : 'localhost',
-    user : 'postgres',
-    password : 'hassan',
-    database : 'ano_posting',
+    host : 'ec2-52-23-86-208.compute-1.amazonaws.com',
+    user : 'qzlxmsfcehahpz',
+    password : '2f538ded7e8115802d0570dcb4a0bdee06d3e6cfbf82f3d37e8ef3703f186471',
+    database : 'ddu36ura7kra61',
     port: 5432
   });
   console.log("Successful connection to the database");
@@ -153,10 +153,10 @@ const getspecificreplyData = (req, res, db) => {
   let reply_to = req.query.reply_to;
   const { Pool } = require("pg");
   const pool = new Pool({
-    host : 'localhost',
-    user : 'postgres',
-    password : 'hassan',
-    database : 'ano_posting',
+    host : 'ec2-52-23-86-208.compute-1.amazonaws.com',
+    user : 'qzlxmsfcehahpz',
+    password : '2f538ded7e8115802d0570dcb4a0bdee06d3e6cfbf82f3d37e8ef3703f186471',
+    database : 'ddu36ura7kra61',
     port: 5432
   });
   console.log("Successful connection to the database");
