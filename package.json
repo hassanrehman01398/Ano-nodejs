@@ -1,29 +1,32 @@
 {
-  "name": "crudpractice1",
+  "name": "react-nodejs-crud-master",
   "version": "1.0.0",
-  "description": "crud practice",
+  "description": "<p align=\"center\">   <img width=\"460\" height=\"300\" src=\"https://user-images.githubusercontent.com/47937749/90986821-169a6780-e59f-11ea-9a28-d29a2bb290c4.jpg\"> </p> Anonymous Posting website build for those posting of those people who feels shy while saying someone something so this website is created by us so that anyone can post anything on any issue.This website neither stores anyone personal data and it is impossible to detect the person as we are not asking any type of password and neither we are using any mac or ip address instead we you are using some technique to hide any one details.",
   "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^4.1.0",
+    "knex": "^0.21.5",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.4",
+    "pg": "^8.3.3"
+  },
+  "devDependencies": {},
   "scripts": {
-    "start": "nodemon server.js",
-    "build": "./node_modules/.bin/webpack --config webpack.conf.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hassanrehman01398/Ano-nodejs.git"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "body-parser": "^1.18.3",
-    "client": "0.0.1",
-    "cors": "^2.8.5",
-    "dotenv": "^7.0.0",
-    "express": "^4.16.4",
-    "helmet": "^4.1.0",
-    "knex": "^0.21.1",
-    "morgan": "^1.9.1",
-    "objection": "^2.1.3",
-    "pg": "^8.0.3"
+  "bugs": {
+    "url": "https://github.com/hassanrehman01398/Ano-nodejs/issues"
   },
-  "devDependencies": {
-    "nodemon": "^2.0.4",
-    "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12"
-  }
+  "homepage": "https://github.com/hassanrehman01398/Ano-nodejs#readme"
 }

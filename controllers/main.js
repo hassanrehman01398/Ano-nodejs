@@ -20,13 +20,11 @@ const getmaxview = async function(req, res, db)  {
   // });
   const { Pool } = require("pg");
   const pool = new Pool({
-    host : 'anonymous.postgres.database.azure.com',
-    user : 'hassanrehman01398@anonymous',
-    password : 'hassan01398=',
-    database : 'ano_posting',
-    port: 5432,
-    ssl: true
-  });
+  //   ssl: true
+  
+  
+  
+});
   console.log("Successful connection to the database");
   pool.query('select * from posts where views=(SELECT MAX(views) FROM posts)', (err, rows) => {
   //  res.json(rows["rows"])
@@ -55,17 +53,17 @@ const getmaxview = async function(req, res, db)  {
 const getnewest= (req, res, db) => {
   const { Pool } = require("pg");
   const pool = new Pool({
-    host : 'anonymous.postgres.database.azure.com',
-    user : 'hassanrehman01398@anonymous',
-    password : 'hassan01398=',
+    host : 'localhost',
+    user : 'postgres',
+    password : 'hassan',
     database : 'ano_posting',
-    port: 5432,
-    ssl: true
+    port: 5432
   });
   console.log("Successful connection to the database");
   pool.query('select * from posts  ORDER BY CAST (posttime AS timestamp) Desc', (err, rows) => {
   //  res.json(rows["rows"])
-    if(rows["rows"].length>0){
+   try{
+  if(rows["rows"].length>0){
       res.json(rows["rows"])
 
     }
@@ -75,7 +73,9 @@ const getnewest= (req, res, db) => {
     //const count = rows[0].count;
     // const count = rows[0]['COUNT(*)']; // without alias
   //  console.log(`count: ${count}`);
-});
+}
+catch(e){}
+  });
   // db.select('*').from('posts')
   //   .then(items => {
   //     if(items.length){
@@ -89,12 +89,11 @@ const getnewest= (req, res, db) => {
 const getminview = (req, res, db) => {
   const { Pool } = require("pg");
   const pool = new Pool({
-    host : 'anonymous.postgres.database.azure.com',
-    user : 'hassanrehman01398@anonymous',
-    password : 'hassan01398=',
+    host : 'localhost',
+    user : 'postgres',
+    password : 'hassan',
     database : 'ano_posting',
-    port: 5432,
-    ssl: true
+    port: 5432
   });
   console.log("Successful connection to the database");
   pool.query('select * from posts where views=(SELECT min(views) FROM posts)', (err, rows) => {
@@ -124,23 +123,29 @@ const getspecificpostData = (req, res, db) => {
   let post_id = req.query.post_id;
   const { Pool } = require("pg");
   const pool = new Pool({
-    host : 'anonymous.postgres.database.azure.com',
-    user : 'hassanrehman01398@anonymous',
-    password : 'hassan01398=',
+    host : 'localhost',
+    user : 'postgres',
+    password : 'hassan',
     database : 'ano_posting',
-    port: 5432,
-    ssl: true
+    port: 5432
   });
   console.log("Successful connection to the database");
   pool.query("select * from posts where post_id='"+post_id+"'", (err, rows) => {
-  //  res.json(rows["rows"])
+   console.log(rows);
+    //console.log(rows["rows"]);
+   // res.json(rows["rows"])
+   console.log(rows);
+   try{
+  if(rows["rows"]){
     if(rows["rows"].length>0){
       res.json(rows["rows"])
 
     }
     else{
       res.json({dataExists: 'false'})
-    }
+    }}
+  }
+  catch(e){}
 })
 
 }
@@ -148,16 +153,18 @@ const getspecificreplyData = (req, res, db) => {
   let reply_to = req.query.reply_to;
   const { Pool } = require("pg");
   const pool = new Pool({
-    host : 'anonymous.postgres.database.azure.com',
-    user : 'hassanrehman01398@anonymous',
-    password : 'hassan01398=',
+    host : 'localhost',
+    user : 'postgres',
+    password : 'hassan',
     database : 'ano_posting',
-    port: 5432,
-    ssl: true
+    port: 5432
   });
   console.log("Successful connection to the database");
-  pool.query("select * from replys where reply_id='"+reply_to+"'", (err, rows) => {
+  pool.query("select * from replys where reply_to='"+reply_to+"'", (err, rows) => {
   //  res.json(rows["rows"])
+  console.log(rows);
+try{
+  if(rows["rows"]){
     if(rows["rows"].length>0){
       res.json(rows["rows"])
 
@@ -165,7 +172,11 @@ const getspecificreplyData = (req, res, db) => {
     else{
       res.json({dataExists: 'false'})
     }
-})
+  }}
+  catch(e){}
+}
+  
+  )
 
 }
 const getcountpostData = (req, res, db) => {
