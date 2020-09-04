@@ -94,10 +94,9 @@ const getminview = (req, res, db) => {
   const { Client } = require('pg');
 
   const pool = new Client({
-    connectionString: process.env.DATABASE_URL,
+    connectionString: "postgres://qzlxmsfcehahpz:2f538ded7e8115802d0570dcb4a0bdee06d3e6cfbf82f3d37e8ef3703f186471@ec2-52-23-86-208.compute-1.amazonaws.com:5432/ddu36ura7kra61",
     ssl: true,
   });
-  
   pool.connect();
   console.log("Successful connection to the database");
   pool.query('select * from posts where views=(SELECT min(views) FROM posts)', (err, rows) => {
@@ -129,7 +128,7 @@ const getspecificpostData = (req, res, db) => {
   const { Client } = require('pg');
 
   const pool = new Client({
-    connectionString: process.env.DATABASE_URL,
+    connectionString: "postgres://qzlxmsfcehahpz:2f538ded7e8115802d0570dcb4a0bdee06d3e6cfbf82f3d37e8ef3703f186471@ec2-52-23-86-208.compute-1.amazonaws.com:5432/ddu36ura7kra61",
     ssl: true,
   });
   
@@ -159,7 +158,7 @@ const getspecificreplyData = (req, res, db) => {
   const { Client } = require('pg');
 
   const pool = new Client({
-    connectionString: process.env.DATABASE_URL,
+    connectionString: "postgres://qzlxmsfcehahpz:2f538ded7e8115802d0570dcb4a0bdee06d3e6cfbf82f3d37e8ef3703f186471@ec2-52-23-86-208.compute-1.amazonaws.com:5432/ddu36ura7kra61",
     ssl: true,
   });
   

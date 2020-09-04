@@ -18,16 +18,17 @@ const morgan = require('morgan') // logs requests
 //     ssl: true,
 //   }
 // });
+//  const { Client } = require('pg');
 
+// const pool = new Client({
+//   connectionString: "postgres://qzlxmsfcehahpz:2f538ded7e8115802d0570dcb4a0bdee06d3e6cfbf82f3d37e8ef3703f186471@ec2-52-23-86-208.compute-1.amazonaws.com:5432/ddu36ura7kra61",
+//   ssl: true,
+// });
 // db Connection w/ localhost
 var db = require('knex')({
   client: 'pg',
   connection: {
-    host : 'ec2-52-23-86-208.compute-1.amazonaws.com',
-    user : 'qzlxmsfcehahpz',
-    password : '2f538ded7e8115802d0570dcb4a0bdee06d3e6cfbf82f3d37e8ef3703f186471',
-    database : 'ddu36ura7kra61',
-    port: 5432,
+    connectionString: "postgres://qzlxmsfcehahpz:2f538ded7e8115802d0570dcb4a0bdee06d3e6cfbf82f3d37e8ef3703f186471@ec2-52-23-86-208.compute-1.amazonaws.com:5432/ddu36ura7kra61",
    ssl: true,
     
   }
