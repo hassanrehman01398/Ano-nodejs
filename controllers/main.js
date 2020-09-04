@@ -18,16 +18,18 @@ const getmaxview = async function(req, res, db)  {
   //   port: 5432,
   //   ssl: true
   // });
-  const { Pool } = require("pg");
-  const pool = new Pool({
-  //   ssl: true
+  const { Client } = require('pg');
+
+  const pool = new Client({
+    connectionString: "postgres://qzlxmsfcehahpz:2f538ded7e8115802d0570dcb4a0bdee06d3e6cfbf82f3d37e8ef3703f186471@ec2-52-23-86-208.compute-1.amazonaws.com:5432/ddu36ura7kra61",
+    ssl: true,
+  });
   
-  
-  
-});
+  pool.connect();
   console.log("Successful connection to the database");
   pool.query('select * from posts where views=(SELECT MAX(views) FROM posts)', (err, rows) => {
   //  res.json(rows["rows"])
+  try{
     if(rows["rows"].length>0){
       res.json(rows["rows"])
 
@@ -35,6 +37,8 @@ const getmaxview = async function(req, res, db)  {
     else{
       res.json({dataExists: 'false'})
     }
+  }
+  catch(e){}
     //const count = rows[0].count;
     // const count = rows[0]['COUNT(*)']; // without alias
   //  console.log(`count: ${count}`);
@@ -51,14 +55,14 @@ const getmaxview = async function(req, res, db)  {
   //   .catch(err => res.status(400).json({dbError: 'Database Connection Error'}))
 }
 const getnewest= (req, res, db) => {
-  const { Pool } = require("pg");
-  const pool = new Pool({
-    host : 'ec2-52-23-86-208.compute-1.amazonaws.com',
-    user : 'qzlxmsfcehahpz',
-    password : '2f538ded7e8115802d0570dcb4a0bdee06d3e6cfbf82f3d37e8ef3703f186471',
-    database : 'ddu36ura7kra61',
-    port: 5432
+  const { Client } = require('pg');
+
+  const pool = new Client({
+    connectionString: "postgres://qzlxmsfcehahpz:2f538ded7e8115802d0570dcb4a0bdee06d3e6cfbf82f3d37e8ef3703f186471@ec2-52-23-86-208.compute-1.amazonaws.com:5432/ddu36ura7kra61",
+    ssl: true,
   });
+  
+  pool.connect();
   console.log("Successful connection to the database");
   pool.query('select * from posts  ORDER BY CAST (posttime AS timestamp) Desc', (err, rows) => {
   //  res.json(rows["rows"])
@@ -87,24 +91,26 @@ catch(e){}
   //   .catch(err => res.status(400).json({dbError: 'Database Connection Error'}))
 }
 const getminview = (req, res, db) => {
-  const { Pool } = require("pg");
-  const pool = new Pool({
-    host : 'ec2-52-23-86-208.compute-1.amazonaws.com',
-    user : 'qzlxmsfcehahpz',
-    password : '2f538ded7e8115802d0570dcb4a0bdee06d3e6cfbf82f3d37e8ef3703f186471',
-    database : 'ddu36ura7kra61',
-    port: 5432
+  const { Client } = require('pg');
+
+  const pool = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true,
   });
+  
+  pool.connect();
   console.log("Successful connection to the database");
   pool.query('select * from posts where views=(SELECT min(views) FROM posts)', (err, rows) => {
   //  res.json(rows["rows"])
-    if(rows["rows"].length>0){
+   try{
+  if(rows["rows"].length>0){
       res.json(rows["rows"])
 
     }
     else{
       res.json({dataExists: 'false'})
-    }
+    }}
+    catch(e){}
     //const count = rows[0].count;
     // const count = rows[0]['COUNT(*)']; // without alias
   //  console.log(`count: ${count}`);
@@ -120,15 +126,14 @@ const getminview = (req, res, db) => {
   //   .catch(err => res.status(400).json({dbError: 'Database Connection Error'}))
 }
 const getspecificpostData = (req, res, db) => {
-  let post_id = req.query.post_id;
-  const { Pool } = require("pg");
-  const pool = new Pool({
-    host : 'ec2-52-23-86-208.compute-1.amazonaws.com',
-    user : 'qzlxmsfcehahpz',
-    password : '2f538ded7e8115802d0570dcb4a0bdee06d3e6cfbf82f3d37e8ef3703f186471',
-    database : 'ddu36ura7kra61',
-    port: 5432
+  const { Client } = require('pg');
+
+  const pool = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true,
   });
+  
+  pool.connect();
   console.log("Successful connection to the database");
   pool.query("select * from posts where post_id='"+post_id+"'", (err, rows) => {
    console.log(rows);
@@ -151,14 +156,14 @@ const getspecificpostData = (req, res, db) => {
 }
 const getspecificreplyData = (req, res, db) => {
   let reply_to = req.query.reply_to;
-  const { Pool } = require("pg");
-  const pool = new Pool({
-    host : 'ec2-52-23-86-208.compute-1.amazonaws.com',
-    user : 'qzlxmsfcehahpz',
-    password : '2f538ded7e8115802d0570dcb4a0bdee06d3e6cfbf82f3d37e8ef3703f186471',
-    database : 'ddu36ura7kra61',
-    port: 5432
+  const { Client } = require('pg');
+
+  const pool = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true,
   });
+  
+  pool.connect();
   console.log("Successful connection to the database");
   pool.query("select * from replys where reply_to='"+reply_to+"'", (err, rows) => {
   //  res.json(rows["rows"])
