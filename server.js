@@ -9,8 +9,14 @@ const helmet = require('helmet') // creates headers that protect from attacks (s
 const bodyParser = require('body-parser') // turns response into usable format
 const cors = require('cors')  // allows/disallows cross-site communication
 const morgan = require('morgan') // logs requests
+const app=express()
+app.use(helmet())
+app.use(cors(corsOptions))
+app.use(bodyParser.json())
+app.use(morgan('combined')) // use 'tiny' or 'combined'
 
 
+app.use(cors())
 // var db = require('knex')({
   
 //   client: 'pg',
@@ -42,7 +48,7 @@ db.connect();
 const main = require('./controllers/main')
 
 // App
-const app = express()
+
 
 // App Middleware
 const whitelist = ['http://localhost:3001']
@@ -55,10 +61,7 @@ const corsOptions = {
     }
   }
 }
-app.use(helmet())
-app.use(cors(corsOptions))
-app.use(bodyParser.json())
-app.use(morgan('combined')) // use 'tiny' or 'combined'
+
 
 // App Routes - Auth
 app.get('/', (req, res) => res.send('hello world'))
