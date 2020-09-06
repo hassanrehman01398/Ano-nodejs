@@ -10,29 +10,16 @@ const bodyParser = require('body-parser') // turns response into usable format
 const cors = require('cors')  // allows/disallows cross-site communication
 const morgan = require('morgan') // logs requests
 
-// db Connection w/ Heroku
-// const db = require('knex')({
-//   client: 'pg',
-//   connection: {
-//     connectionString: process.env.DATABASE_URL,
-//     ssl: true,
-//   }
-// });
-//  const { Client } = require('pg');
 
-// const pool = new Client({
-//   connectionString: "postgres://qzlxmsfcehahpz:2f538ded7e8115802d0570dcb4a0bdee06d3e6cfbf82f3d37e8ef3703f186471@ec2-52-23-86-208.compute-1.amazonaws.com:5432/ddu36ura7kra61",
-//   ssl: true,
-// });
-// db Connection w/ localhost
-var db = require('knex')({
-  client: 'pg',
-  connection: {
-    connectionString: "postgres://qzlxmsfcehahpz:2f538ded7e8115802d0570dcb4a0bdee06d3e6cfbf82f3d37e8ef3703f186471@ec2-52-23-86-208.compute-1.amazonaws.com:5432/ddu36ura7kra61",
-   ssl: true,
-    
-  }
+const { Client } = require('pg');
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+const db = new Client({
+  connectionString: "postgres://qzlxmsfcehahpz:2f538ded7e8115802d0570dcb4a0bdee06d3e6cfbf82f3d37e8ef3703f186471@ec2-52-23-86-208.compute-1.amazonaws.com:5432/ddu36ura7kra61",
+  ssl: true,
 });
+
+db.connect();
+
 
 // Controllers - aka, the db queries
 const main = require('./controllers/main')

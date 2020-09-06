@@ -1,13 +1,20 @@
 const getTableData = (req, res, db) => {
-  db.select('*').from('posts')
-    .then(items => {
-      if(items.length){
-        res.json(items)
-      } else {
+  db.query('select * from posts', (err, rows) => {
+    //  res.json(rows["rows"])
+    try{
+      if(rows["rows"].length>0){
+        res.json(rows["rows"])
+  
+      }
+      else{
         res.json({dataExists: 'false'})
       }
-    })
-    .catch(err =>console.log(err), res.status(400).json({dbError: 'Database Connection Error'}))
+    }
+    catch(e){}
+      //const count = rows[0].count;
+      // const count = rows[0]['COUNT(*)']; // without alias
+    //  console.log(`count: ${count}`);
+  });
 }
 const getmaxview = async function(req, res, db)  {
   // var con = mysql.createConnection({
@@ -19,14 +26,14 @@ const getmaxview = async function(req, res, db)  {
   //   ssl: true
   // });
   const { Client } = require('pg');
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+const pool = new Client({
+  connectionString: "postgres://qzlxmsfcehahpz:2f538ded7e8115802d0570dcb4a0bdee06d3e6cfbf82f3d37e8ef3703f186471@ec2-52-23-86-208.compute-1.amazonaws.com:5432/ddu36ura7kra61",
+  ssl: true,
+});
 
-  const pool = new Client({
-    connectionString: "postgres://qzlxmsfcehahpz:2f538ded7e8115802d0570dcb4a0bdee06d3e6cfbf82f3d37e8ef3703f186471@ec2-52-23-86-208.compute-1.amazonaws.com:5432/ddu36ura7kra61",
-    ssl: true,
-  });
-  
-  pool.connect();
-  console.log("Successful connection to the database");
+pool.connect();
+console.log("Successful connection to the database");
   pool.query('select * from posts where views=(SELECT MAX(views) FROM posts)', (err, rows) => {
   //  res.json(rows["rows"])
   try{
@@ -57,6 +64,7 @@ const getmaxview = async function(req, res, db)  {
 const getnewest= (req, res, db) => {
   const { Client } = require('pg');
 
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
   const pool = new Client({
     connectionString: "postgres://qzlxmsfcehahpz:2f538ded7e8115802d0570dcb4a0bdee06d3e6cfbf82f3d37e8ef3703f186471@ec2-52-23-86-208.compute-1.amazonaws.com:5432/ddu36ura7kra61",
     ssl: true,
@@ -93,6 +101,7 @@ catch(e){}
 const getminview = (req, res, db) => {
   const { Client } = require('pg');
 
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
   const pool = new Client({
     connectionString: "postgres://qzlxmsfcehahpz:2f538ded7e8115802d0570dcb4a0bdee06d3e6cfbf82f3d37e8ef3703f186471@ec2-52-23-86-208.compute-1.amazonaws.com:5432/ddu36ura7kra61",
     ssl: true,
@@ -125,18 +134,21 @@ const getminview = (req, res, db) => {
   //   .catch(err => res.status(400).json({dbError: 'Database Connection Error'}))
 }
 const getspecificpostData = (req, res, db) => {
+  let post_id = req.query.post_id;
   const { Client } = require('pg');
 
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
   const pool = new Client({
     connectionString: "postgres://qzlxmsfcehahpz:2f538ded7e8115802d0570dcb4a0bdee06d3e6cfbf82f3d37e8ef3703f186471@ec2-52-23-86-208.compute-1.amazonaws.com:5432/ddu36ura7kra61",
     ssl: true,
   });
   
   pool.connect();
+  //console.log(po);
   console.log("Successful connection to the database");
   pool.query("select * from posts where post_id='"+post_id+"'", (err, rows) => {
    console.log(rows);
-    //console.log(rows["rows"]);
+    //console.log(rows["rows"]);cxzcxcxzcx
    // res.json(rows["rows"])
    console.log(rows);
    try{
@@ -155,8 +167,9 @@ const getspecificpostData = (req, res, db) => {
 }
 const getspecificreplyData = (req, res, db) => {
   let reply_to = req.query.reply_to;
-  const { Client } = require('pg');
+   const { Client } = require('pg');
 
+   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
   const pool = new Client({
     connectionString: "postgres://qzlxmsfcehahpz:2f538ded7e8115802d0570dcb4a0bdee06d3e6cfbf82f3d37e8ef3703f186471@ec2-52-23-86-208.compute-1.amazonaws.com:5432/ddu36ura7kra61",
     ssl: true,
@@ -190,54 +203,83 @@ const getcountpostData = (req, res, db) => {
   //     console.log("Total Records:- " + result.length);
   // });
   
-  db.select('*').from('posts')
-    .then(items => {
-      if(items.length){
-        res.json(items.length)
-      } else {
+  db.query('select * from posts', (err, rows) => {
+    //  res.json(rows["rows"])
+    try{
+      if(rows["rows"].length>0){
+        res.json(rows["rows"].length)
+  
+      }
+      else{
         res.json({dataExists: 'false'})
       }
-    })
-    .catch(err => res.status(400).json({dbError: 'Database Connection Error'}))
+    }
+    catch(e){}
+      //const count = rows[0].count;
+      // const count = rows[0]['COUNT(*)']; // without alias
+    //  console.log(`count: ${count}`);
+  });
 }
 const postTableData = async (req, res, db) => {
   const { post_description,likes,views ,posttitle,posttime} = req.body
   const added = new Date()
-  await db('posts').insert({ post_description,likes,views,posttitle,posttime})
-    .returning('*')
-    .then(item => {
-      res.json(item)
-    })
-    .catch(err=>{
+  try{
+  db.query("insert into posts(post_description,likes,views,posttitle,posttime) values('"+post_description+"','"+likes+"','"+views+"','"+posttitle+"','"+posttime+"')", (err, res) => {
+    console.log(err, res);
+    
+    db.end();
+  }
+);
+}
+    catch(e){}
+      //const count = rows[0].count;
+      // const count = rows[0]['COUNT(*)']; // without alias
+    //  console.log(`count: ${count}`);
 
-      console.log('Error:', err.message);
-      res.status(500).json({
-        message: "Error(Internal)",
-        success: false,
-        error: err.message
-     })
-    })
+  // await db('posts').insert({ post_description,likes,views,posttitle,posttime})
+  //   .returning('*')
+  //   .then(item => {
+  //     res.json(item)
+  //   })
+  //   .catch(err=>{
+
+  //     console.log('Error:', err.message);
+  //     res.status(500).json({
+  //       message: "Error(Internal)",
+  //       success: false,
+  //       error: err.message
+  //    })
+  //   })
   }
 
   const postreplyData = async (req, res, db) => {
     const { reply_to,reply_description,likes,views ,replytime} = req.body
     const added = new Date()
-    await db('replys').insert({  reply_to,reply_description,likes,views ,replytime})
-      .returning('*')
-      .then(item => {
-        res.json(item)
-      })
-      .catch(err=>{
-  
-        console.log('Error:', err.message);
-        res.status(500).json({
-          message: "Error(Internal)",
-          success: false,
-          error: err.message
-       })
-      })
+    //insert into posts(post_description,likes,views,posttitle,posttime) values('why hassan is cute?',0,0,'cuteness','2019-5-1')
+    try{
+      db.query("insert into replys(reply_to,reply_description,likes,views,replytime) values('"+reply_to+"','"+reply_description+"','"+likes+"','"+views+"','"+replytime+"')", (err, res) => {
+        console.log(err, res);
+        db.end();
+      }
+    );
     }
+        catch(e){}
+    // await db('replys').insert({  reply_to,reply_description,likes,views ,replytime})
+    //   .returning('*')
+    //   .then(item => {
+    //     res.json(item)
+    //   })
+    //   .catch(err=>{
   
+    //     console.log('Error:', err.message);
+    //     res.status(500).json({
+    //       message: "Error(Internal)",
+    //       success: false,
+    //       error: err.message
+    //    })
+    //   })
+    // }
+  }
 const putTableData = (req, res, db) => {
   const { post_id, post_description,likes,views ,posttitle,posttime} = req.body
   db('posts').where({post_id}).update({post_description,likes,views ,posttitle,posttime})
